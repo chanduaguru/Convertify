@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Convertify - PDF Converter</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico.png" type="image/x-icon" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3b82f6',
+            darkblue: '#1A237E'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Theme loader -->
+  <script>
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+</head>
+
+<body class="bg-white dark:bg-gray-900 dark:text-white text-gray-900 min-h-screen flex flex-col justify-between transition-colors duration-300">
+
+  <!-- Header (Centered) -->
+  <header class="w-full border-b dark:border-gray-700 border-gray-200 py-4 flex justify-center items-center">
+    <div class="flex items-center gap-2 text-xl font-bold">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path d="M12 19l-7-7 7-7" />
+      </svg>
+      Convertify
+    </div>
+
+    <!-- Theme toggle right aligned -->
+    <button id="themeToggle" class="absolute right-6 text-gray-500 hover:text-primary transition-colors">
+      <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden dark:inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 3v1m0 16v1m8-8h1M3 12H2m15.364-6.364l-.707.707M6.343 17.657l-.707.707m0-12.728l.707.707m12.728 12.728l.707-.707" />
+      </svg>
+      <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 3C7.029 3 3 7.029 3 12s4.029 9 9 9a9 9 0 005.657-15.657A9.003 9.003 0 0012 3z" />
+      </svg>
+    </button>
+  </header>
+
+  <!-- Dropzone -->
+  <main class="flex-grow flex flex-col items-center justify-center px-4">
+  <div id="dropZone"
+       class="border-2 border-dashed dark:border-gray-600 border-gray-400 rounded-lg w-full max-w-xl h-64 flex flex-col items-center justify-center text-center space-y-4 dark:bg-gray-800 bg-gray-100 transition-colors cursor-pointer relative">
+       
+    <input type="file" id="fileInput" accept=".jpg,.jpeg,.png,.docx,.txt" class="absolute inset-0 opacity-0 cursor-pointer" />
+    
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path d="M12 4v12m0 0l4-4m-4 4l-4-4m8 8h2a2 2 0 002-2v-5a2 2 0 00-.586-1.414l-6-6a2 2 0 00-1.414-.586H8a2 2 0 00-2 2v2" />
+    </svg>
+    <p class="text-lg font-medium">Drag & drop your file here</p>
+    <p class="text-sm text-gray-500 dark:text-gray-400">or click to select a file</p>
+    <p class="text-xs text-gray-500 dark:text-gray-400">Supports: JPG, PNG, TXT, DOCX</p>
+    <p id="fileName" class="text-sm font-semibold text-primary mt-2 hidden"></p>
+  </div>
+
+  <!-- Convert Button (Hidden by default) -->
+  <button id="convertBtn"
+          class="mt-6 bg-primary text-white px-6 py-2 rounded hover:bg-blue-600 transition hidden">
+    Convert to PDF
+  </button>
+</main>
+
+  <!-- Message Button (Bottom-Right) -->
+  <button class="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition-all" onclick="alert('Need help? Send us your query at support@convertify.in')">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M7 8h10M7 12h6m5 8l-5-5H5a2 2 0 01-2-2V7a2 2 0 012-2h14a2 2 0 012 2v11a2 2 0 01-2 2z" />
+    </svg>
+  </button>
+
+  <!-- Footer -->
+  <footer class="px-6 py-4 bg-gray-100 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 text-center space-y-2 transition-colors">
+    <div class="flex justify-center space-x-4 text-gray-600 dark:text-gray-400 text-xl">
+      <a href="#" aria-label="GitHub" class="hover:text-primary"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="LinkedIn" class="hover:text-primary"><i class="fab fa-linkedin"></i></a>
+      <a href="#" aria-label="Twitter" class="hover:text-primary"><i class="fab fa-twitter"></i></a>
+    </div>
+    <p class="text-sm">Built by <span class="font-semibold">Convertify.in</span></p>
+    <p class="text-xs text-gray-500 dark:text-gray-400">All rights reserved © Convertify.in LLP 2025</p>
+  </footer>
+
+  <!-- FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- Theme Toggle Script -->
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    const html = document.documentElement;
+
+    toggleBtn.addEventListener('click', () => {
+      if (html.classList.contains('dark')) {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+  </script>
+  <script src="js/script.js"></script>
+</body>
+</html>
